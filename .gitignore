@@ -26,3 +26,6 @@ override.tf.json
 
 # Notes
 /notes.txt
+
+# .pem files
+*.pem

@@ -15,9 +15,3 @@ variable "instance_type" {
   type        = string
   default     = "t3.micro"
 }
-
-variable "key_name" {
-  description = "SSH key name for the EC2 instance"
-  type        = string
-  nullable    = true
-}
