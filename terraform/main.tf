@@ -76,7 +76,7 @@ resource "null_resource" "configure_ec2" {
         -i ${aws_instance.debian.public_ip}, \
         -u admin \
         --private-key ${path.module}/debian_ssh_key.pem \
-        playbook.yml
+        ${path.module}/../ansible/playbook.yml
     EOT
   }
 }
