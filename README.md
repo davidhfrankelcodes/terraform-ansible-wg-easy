@@ -51,7 +51,7 @@ Whether you’re a home‐lab enthusiast securing your network, or a team operat
 * Terraform (v1.0+)
 * Ansible (v2.10+)
 * Docker & Docker Compose installed locally (for testing)
-* DNS entry (e.g., `homelab.davidhfrankel.com`) pointing to your environment
+* DNS entry (e.g., `myenvironment.example.com`) pointing to your environment
 * **Cloudflare account** with API Token:
 
   1. Log into your Cloudflare dashboard.
@@ -67,7 +67,7 @@ Whether you’re a home‐lab enthusiast securing your network, or a team operat
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/terraform-vpn.git
+   git clone https://github.com/davidhfrankelcodes/terraform-ansible-wg-easy.git
    cd terraform-vpn/terraform
    ```
 2. Configure variables in `terraform.tfvars` (see `terraform.tfvars.example`):
@@ -76,7 +76,7 @@ Whether you’re a home‐lab enthusiast securing your network, or a team operat
    aws_region      = "us-east-1"
    ami_id           = "ami-..."
    instance_type    = "t3.micro"
-   build_env_host   = "homelab.davidhfrankel.com"
+   build_env_host   = "myenvironment.example.com"
    ```
 3. Initialize & apply:
 
