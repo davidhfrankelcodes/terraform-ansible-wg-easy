@@ -13,26 +13,44 @@ resource "aws_key_pair" "debian" {
   public_key = tls_private_key.debian_key.public_key_openssh
 }
 
-# 2️⃣ Create a security group for SSH
+# 2️⃣ Create a security group
 resource "aws_security_group" "debian_ssh" {
   name        = "debian_ssh_sg"
-  description = "Allow SSH access"
+  description = "Allow SSH, WG, and App access"
 
+  # SSH
   ingress {
-    description = "SSH from any IP (adjust as needed)"
+    description = "SSH access from allowed CIDR"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    # ⚠️ WARNING: This is open to the world, use your IP instead
+    cidr_blocks = [var.ssh_allowed_cidr]
+  }
+
+  # WireGuard UDP
+  ingress {
+    description = "WireGuard UDP access from allowed CIDR"
+    from_port   = 51820
+    to_port     = 51820
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # App Web Port
+  ingress {
+    description = "App Web Port access from allowed CIDR"
+    from_port   = 51821
+    to_port     = 51821
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    description      = "Allow all outbound traffic"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+    from_port    = 0
+    to_port      = 0
+    protocol     = "-1"
+    cidr_blocks  = ["0.0.0.0/0"]
   }
 }
 
