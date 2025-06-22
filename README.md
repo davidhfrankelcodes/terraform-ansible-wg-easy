@@ -68,7 +68,7 @@ Whether you’re a home‐lab enthusiast securing your network, or a team operat
 
    ```hcl
    aws_region      = "us-east-1"
-   ami_id           = "ami-..."
+   ami_id           = "ami-..." # generate this with `scripts/get_debian_ami.sh`
    instance_type    = "t3.micro"
    build_env_host   = "myenvironment.example.com"
    ```
