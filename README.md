@@ -45,6 +45,13 @@ It provisions a Debian EC2 instance, installs Docker & Docker Compose, deploys t
 * Ansible (v2.10+)
 * Docker & Docker Compose installed locally (for testing)
 * DNS entry (e.g., `homelab.davidhfrankel.com`) pointing to your environment
+* **Cloudflare account** with API Token:
+
+  1. Log into your Cloudflare dashboard.
+  2. Navigate to **My Profile** → **API Tokens** → **Create Token**.
+  3. Select the **Edit DNS** template (or custom with **Zone.DNS** permissions).
+  4. Specify the zone (e.g., `yourdomain.com`) and generate the token.
+  5. Copy the **API Token** and **Zone ID** from the **Overview** page of your site.
 
 ## Setup Instructions
 
