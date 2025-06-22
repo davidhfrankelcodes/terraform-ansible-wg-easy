@@ -1,4 +1,4 @@
-# main.tf - Minimal parameterized Terraform project to launch a Debian EC2 instance
+# main.tf
 
 provider "aws" {
   region = var.aws_region
@@ -7,20 +7,23 @@ provider "aws" {
 resource "aws_instance" "debian" {
   ami           = var.ami_id
   instance_type = var.instance_type
+  key_name      = var.key_name
 }
 
-variable "aws_region" {
-  description = "AWS region to deploy into"
-  type        = string
+output "debian_public_ip" {
+  value = aws_instance.debian.public_ip
 }
 
-variable "ami_id" {
-  description = "AMI ID for Debian EC2 instance"
-  type        = string
-}
+resource "null_resource" "configure_ec2" {
+  depends_on = [aws_instance.debian]
 
-variable "instance_type" {
-  description = "EC2 instance type"
-  type        = string
-  default     = "t3.micro"
+  provisioner "local-exec" {
+    command = <<EOT
+      ansible-playbook \
+        -i ${aws_instance.debian.public_ip}, \
+        -u admin \
+        --private-key ~/.ssh/id_rsa \
+        playbook.yml
+    EOT
+  }
 }
