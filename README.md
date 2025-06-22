@@ -117,24 +117,6 @@ ssh -i ./debian_ssh_key.pem admin@${debian_public_ip}
 * Add clients via web interface
 * Manage Cloudflare DDNS container for dynamic IP updates
 
-## Screenshots
-
-### 1. Web UI
-
-*WireGuard Easy Web Interface showing connected peers.*
-
-### 2. PEM File Location
-
-*Location of the ****`debian_ssh_key.pem`**** file for SSH access.*
-
-### 3. EC2 Dashboard
-
-*AWS EC2 Console showing the deployed Debian instance.*
-
-### 4. Security Group View
-
-*AWS Security Group rules: SSH restricted to build IP, WG & UI open to the world.*
-
 ## Variables Reference
 
 | Variable         | Description                                       | Default    |
