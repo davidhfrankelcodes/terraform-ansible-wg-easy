@@ -16,7 +16,7 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "ssh_allowed_cidr" {
-  description = "Allowed CIDR block for SSH and app traffic"
+variable "build_env_host" {
+  description = "The hostname of the build environment (ddns)"
   type        = string
 }

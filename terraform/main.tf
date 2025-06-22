@@ -13,38 +13,45 @@ resource "aws_key_pair" "debian" {
   public_key = tls_private_key.debian_key.public_key_openssh
 }
 
-# 2️⃣ Create a security group
+# 2️⃣ DNS for Build Environment
+data "dns_a_record_set" "build_env" {
+  host = var.build_env_host
+}
+
+# 3️⃣ Create a security group
 resource "aws_security_group" "debian_ssh" {
   name        = "debian_ssh_sg"
-  description = "Allow SSH, WG, and App access"
+  description = "Allow SSH from build environment, WG and app from anywhere"
 
-  # SSH
+  # SSH only from build environment IP
   ingress {
-    description = "SSH access from allowed CIDR"
+    description = "SSH from build environment IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.ssh_allowed_cidr]
+
+    cidr_blocks = ["${data.dns_a_record_set.build_env.addrs[0]}/32"]
   }
 
-  # WireGuard UDP
+  # WireGuard UDP open to the world
   ingress {
-    description = "WireGuard UDP access from allowed CIDR"
+    description = "WireGuard UDP access from anywhere"
     from_port   = 51820
     to_port     = 51820
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # App Web Port
+  # App Web Port open to the world
   ingress {
-    description = "App Web Port access from allowed CIDR"
+    description = "App Web Port access from anywhere"
     from_port   = 51821
     to_port     = 51821
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Allow all outbound traffic
   egress {
     description = "Allow all outbound traffic"
     from_port    = 0
@@ -54,7 +61,7 @@ resource "aws_security_group" "debian_ssh" {
   }
 }
 
-# 3️⃣ EC2 instance
+# 4️⃣ EC2 instance
 resource "aws_instance" "debian" {
   ami           = var.ami_id
   instance_type = var.instance_type
@@ -64,25 +71,30 @@ resource "aws_instance" "debian" {
   associate_public_ip_address = true
 }
 
-# 4️⃣ Output the public IP
+# 5️⃣ Output the public IP
 output "debian_public_ip" {
   value = aws_instance.debian.public_ip
 }
 
-# 5️⃣ Output the private key
+# 6️⃣ Output the private key
 output "debian_ssh_private_key" {
   value     = tls_private_key.debian_key.private_key_pem
   sensitive = true
 }
 
-# 6️⃣ Save the private key to a .pem file
+# 7️⃣ Save the private key to a .pem file
 resource "local_file" "debian_ssh_key" {
   content        = tls_private_key.debian_key.private_key_pem
   filename       = "${path.module}/debian_ssh_key.pem"
   file_permission = "0600"
 }
 
-# 7️⃣ Run Ansible after EC2 is up
+# 8️⃣ Output the resolved IP of the build environment (optional!)
+output "build_env_ip" {
+  value = data.dns_a_record_set.build_env.addrs[0]
+}
+
+# 9️⃣ Run Ansible after EC2 is up
 resource "null_resource" "configure_ec2" {
   depends_on = [aws_instance.debian]
 
