@@ -14,15 +14,9 @@ It provisions a Debian EC2 instance, installs Docker & Docker Compose, deploys t
    * [Ansible](#ansible)
 5. [SSH Access](#ssh-access)
 6. [Usage](#usage)
-7. [Screenshots](#screenshots)
-
-   1. [Web UI](#1-web-ui)
-   2. [PEM File Location](#2-pem-file-location)
-   3. [EC2 Dashboard](#3-ec2-dashboard)
-   4. [Security Group View](#4-security-group-view)
-8. [Variables Reference](#variables-reference)
-9. [Contributing](#contributing)
-10. [License](#license)
+7. [Variables Reference](#variables-reference)
+8. [Contributing](#contributing)
+9. [License](#license)
 
 ## Introduction
 
