@@ -10,7 +10,7 @@ services:
       - PORT=${PORT:-51821}
       - WG_DEFAULT_DNS=${WG_DEFAULT_DNS:-1.1.1.1,8.8.8.8}
     volumes:
-      - wg-easy-config:/etc/wireguard
+      - ~/.wg-easy:/etc/wireguard
     ports:
       - "${WG_HOST_PORT:-51820}:${WG_PORT:-51820}/udp"
       - "${HOST_PORT:-51821}:${PORT:-51821}/tcp"
@@ -33,8 +33,3 @@ services:
       - ZONE=${CLOUDFLARE_ZONE:-example.com}
       - SUBDOMAIN=${CLOUDFLARE_SUBDOMAIN:-wg-easy}
       - PROXIED=${CLOUDFLARE_PROXIED:-false}
-
-volumes:
-  wg-easy-config:
-    driver: local
-  
