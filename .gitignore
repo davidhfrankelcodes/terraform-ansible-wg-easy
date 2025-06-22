@@ -29,3 +29,9 @@ override.tf.json
 
 # .pem files
 *.pem
+
+# Env files
+.env
+
+# Scratch
+scratch/
