@@ -23,3 +23,6 @@ override.tf.json
 
 # Sensitive files
 .terraform.lock.hcl
+
+# Notes
+/notes.txt
