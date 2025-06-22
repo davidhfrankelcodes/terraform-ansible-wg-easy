@@ -21,3 +21,15 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
     restart: ${RESTART_POLICY:-unless-stopped}
+    depends_on:
+      - cloudflare-ddns
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:${CLOUDFLARE_DDNS_VERSION:-latest}
+    container_name: cloudflare-ddns
+    restart: ${CLOUDFLARE_DDNS_RESTART_POLICY:-unless-stopped}
+    environment:
+      - API_KEY=${CLOUDFLARE_API_KEY:-your_api_key}
+      - ZONE=${CLOUDFLARE_ZONE:-example.com}
+      - SUBDOMAIN=${CLOUDFLARE_SUBDOMAIN:-wg-easy}
+      - PROXIED=${CLOUDFLARE_PROXIED:-false}
