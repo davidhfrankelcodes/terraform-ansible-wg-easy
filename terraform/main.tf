@@ -105,12 +105,19 @@ resource "null_resource" "configure_ec2" {
   depends_on = [aws_instance.debian]
 
   provisioner "local-exec" {
+    # disable ssh host key prompts
+    environment = {
+      ANSIBLE_HOST_KEY_CHECKING = "False"
+    }
+
     command = <<EOT
+      # give the box time to start SSH
       sleep 30 && \
       ansible-playbook \
         -i ${aws_instance.debian.public_ip}, \
         -u admin \
         --private-key ${path.module}/debian_ssh_key.pem \
+        --ssh-extra-args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' \
         ${path.module}/../ansible/playbook.yml
     EOT
   }
