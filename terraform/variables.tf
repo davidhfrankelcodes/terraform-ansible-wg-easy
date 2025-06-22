@@ -1,5 +1,3 @@
-# variables.tf
-
 variable "aws_region" {
   description = "AWS region to deploy into"
   type        = string
@@ -17,6 +15,16 @@ variable "instance_type" {
 }
 
 variable "build_env_host" {
-  description = "The hostname of the build environment (ddns)"
+  description = "The hostname of the build environment (for DDNS)"
   type        = string
+}
+
+variable "tags" {
+  description = "Common tags to apply to all resources"
+  type        = map(string)
+  default     = {
+    Project     = "terraform-ansible-wg-easy"
+    Environment = "production"
+    ManagedBy   = "terraform"
+  }
 }
