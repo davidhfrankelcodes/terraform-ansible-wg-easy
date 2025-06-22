@@ -1,7 +1,7 @@
 services:
   wg-easy:
     image: ghcr.io/wg-easy/wg-easy:${WG_EASY_VERSION:-latest}
-    container_name: ${CONTAINER_NAME:-wg-easy}
+    container_name: ${WG_EASY_CONTAINER_NAME:-wg-easy}
     environment:
       - LANG=${LANG:-en}
       - WG_HOST=${WG_HOST:-example.com}
@@ -26,7 +26,7 @@ services:
 
   cloudflare-ddns:
     image: oznu/cloudflare-ddns:${CLOUDFLARE_DDNS_VERSION:-latest}
-    container_name: cloudflare-ddns
+    container_name: ${CLOUDFLARE_DDNS_CONTAINER_NAME:-cloudflare-ddns}
     restart: ${CLOUDFLARE_DDNS_RESTART_POLICY:-unless-stopped}
     environment:
       - API_KEY=${CLOUDFLARE_API_KEY:-your_api_key}
