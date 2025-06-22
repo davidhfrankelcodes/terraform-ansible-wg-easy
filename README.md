@@ -1,6 +1,7 @@
 # terraform-ansible-wg-easy
 
-> *A high-level overview of the project architecture.*
+This project automates the deployment of a WireGuard VPN + Web UI using Terraform, Ansible, and Docker Compose on AWS.
+It provisions a Debian EC2 instance, installs Docker & Docker Compose, deploys the [wg-easy](https://github.com/wg-easy/wg-easy) container, and configures Cloudflare Dynamic DNS.
 
 ## Table of Contents
 
@@ -25,8 +26,14 @@
 
 ## Introduction
 
-This project automates the deployment of a WireGuard VPN + Web UI using Terraform, Ansible, and Docker Compose on AWS.
-It provisions a Debian EC2 instance, installs Docker & Docker Compose, deploys the [wg-easy](https://github.com/weejewel/wg-easy) container, and configures Cloudflare Dynamic DNS.
+In today’s world of remote work, traveling, and distributed teams, having a secure, reliable VPN is essential for accessing private resources—without the complexity of managing servers or networking by hand. This project streamlines the entire process by combining:
+
+1. **Infrastructure as Code**: Spin up a hardened Debian EC2 instance on AWS with a single `terraform apply`.
+2. **Configuration Management**: Automatically install and configure Docker, WireGuard, and Cloudflare DDNS via Ansible.
+3. **User-Friendly VPN**: Deploy the popular [wg-easy](https://github.com/wg-easy/wg-easy) container for an intuitive web interface to create, revoke, and monitor VPN clients.
+4. **Dynamic Security**: Leverage Cloudflare DNS to keep your domain always pointing at your home or cloud instance, and lock down SSH access dynamically to your build environment’s IP.
+
+Whether you’re a home‐lab enthusiast securing your network, or a team operator needing on‐demand VPN endpoints, this end‐to‐end solution removes manual steps, reduces error, and makes launching a fully managed WireGuard service as simple as writing code.
 
 ## Features
 
